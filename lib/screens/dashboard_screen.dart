@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/project.dart';
+import 'package:nav_complexit_ystudy/screens/profile_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _currentIndex = 0;
+
   final List<Project> projects = [
     Project(id: '1', name: 'Mobile App Refactor', progress: 0.65),
     Project(id: '2', name: 'Legacy System Sync', progress: 0.30),
@@ -9,10 +19,19 @@ class DashboardScreen extends StatelessWidget {
     Project(id: '4', name: 'Client Onboarding', progress: 0.10),
   ];
 
-  DashboardScreen({super.key});
+  late final List<Widget> _pages;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _pages = [
+      _buildDashboardContent(),
+      const ProfileScreen(),
+      const Scaffold(body: Center(child: Text('Settings Placeholder'))),
+    ];
+  }
+
+  Widget _buildDashboardContent() {
     return Scaffold(
       appBar: AppBar(title: const Text('My Projects')),
       body: ListView.builder(
@@ -44,6 +63,38 @@ class DashboardScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
       ),
     );
   }
