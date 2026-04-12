@@ -31,7 +31,9 @@ class LoginScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),
-              onPressed: () {}, // Empty callback as requested
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/dashboard');
+              },
               child: const Text('Login'),
             ),
           ],
