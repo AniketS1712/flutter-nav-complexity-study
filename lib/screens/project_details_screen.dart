@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/task.dart';
+import 'package:nav_complexit_ystudy/navigation/router_delegate.dart';
 
 class ProjectDetailsScreen extends StatelessWidget {
   final String projectName;
@@ -45,7 +46,10 @@ class ProjectDetailsScreen extends StatelessWidget {
                 backgroundColor: _getPriorityColor(task.priority),
                 side: BorderSide.none,
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+                delegate.selectTask(task.id);
+              },
             ),
           );
         },

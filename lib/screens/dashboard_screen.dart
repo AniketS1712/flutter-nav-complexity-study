@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/project.dart';
+import 'package:nav_complexit_ystudy/navigation/router_delegate.dart';
 import 'package:nav_complexit_ystudy/screens/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -35,6 +36,7 @@ class DashboardScreen extends StatelessWidget {
               child: ProfileScreen(),
             ),
         ],
+        // ignore: deprecated_member_use
         onPopPage: (route, result) {
           if (!route.didPop(result)) return false;
           return true;
@@ -79,7 +81,10 @@ class DashboardScreen extends StatelessWidget {
                   Text('${(project.progress * 100).toInt()}% complete'),
                 ],
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+                delegate.selectProject(project.id);
+              },
             ),
           );
         },
