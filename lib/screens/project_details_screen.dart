@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nav_complexit_ystudy/models/task.dart';
 
 class ProjectDetailsScreen extends StatelessWidget {
@@ -45,7 +46,16 @@ class ProjectDetailsScreen extends StatelessWidget {
                 backgroundColor: _getPriorityColor(task.priority),
                 side: BorderSide.none,
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                context.pushNamed(
+                  'task_details',
+                  pathParameters: {
+                    'projectId': task.projectId,
+                    'taskId': task.id,
+                  },
+                  extra: task,
+                );
+              },
             ),
           );
         },

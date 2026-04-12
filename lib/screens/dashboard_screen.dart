@@ -68,7 +68,13 @@ class ProjectsListScreen extends StatelessWidget {
                   Text('${(project.progress * 100).toInt()}% complete'),
                 ],
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                context.pushNamed(
+                  'project_details',
+                  pathParameters: {'projectId': project.id},
+                  extra: project,
+                );
+              }, // Navigation target
             ),
           );
         },

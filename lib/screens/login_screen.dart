@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nav_complexit_ystudy/navigation/app_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -33,6 +34,7 @@ class LoginScreen extends StatelessWidget {
                 minimumSize: const Size.fromHeight(50),
               ),
               onPressed: () {
+                isAuthenticated = true;
                 context.go('/dashboard');
               },
               child: const Text('Login'),
