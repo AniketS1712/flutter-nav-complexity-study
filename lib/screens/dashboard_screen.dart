@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nav_complexit_ystudy/models/project.dart';
 
 class DashboardScreen extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const DashboardScreen({super.key, required this.navigationShell});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+      ),
+    );
+  }
+}
+
+class ProjectsListScreen extends StatelessWidget {
   final List<Project> projects = [
     Project(id: '1', name: 'Mobile App Refactor', progress: 0.65),
     Project(id: '2', name: 'Legacy System Sync', progress: 0.30),
@@ -9,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
     Project(id: '4', name: 'Client Onboarding', progress: 0.10),
   ];
 
-  DashboardScreen({super.key});
+  ProjectsListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
