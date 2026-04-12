@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/project.dart';
+import 'package:nav_complexit_ystudy/navigation/routes.dart';
 import 'package:nav_complexit_ystudy/screens/profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -59,7 +60,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Text('${(project.progress * 100).toInt()}% complete'),
                 ],
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.projectDetails,
+                  arguments: project,
+                );
+              },
             ),
           );
         },

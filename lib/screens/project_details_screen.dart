@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/task.dart';
+import 'package:nav_complexit_ystudy/models/project.dart';
+import 'package:nav_complexit_ystudy/navigation/routes.dart';
 
 class ProjectDetailsScreen extends StatelessWidget {
-  final String projectName;
+  final Project project;
   final List<Task> tasks = [
     Task(id: '1', projectId: '1', title: 'Update API Endpoints', priority: TaskPriority.high, status: 'In Progress'),
     Task(id: '2', projectId: '1', title: 'Fix Header Alignment', priority: TaskPriority.low, status: 'Done'),
@@ -10,7 +12,7 @@ class ProjectDetailsScreen extends StatelessWidget {
     Task(id: '4', projectId: '1', title: 'Documentation', priority: TaskPriority.medium, status: 'To Do'),
   ];
 
-  ProjectDetailsScreen({super.key, required this.projectName});
+  ProjectDetailsScreen({super.key, required this.project});
 
   Color _getPriorityColor(TaskPriority priority) {
     switch (priority) {
@@ -26,7 +28,7 @@ class ProjectDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(projectName)),
+      appBar: AppBar(title: Text(project.name)),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: tasks.length,
@@ -45,7 +47,13 @@ class ProjectDetailsScreen extends StatelessWidget {
                 backgroundColor: _getPriorityColor(task.priority),
                 side: BorderSide.none,
               ),
-              onTap: () {}, // Empty callback
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.taskDetails,
+                  arguments: task,
+                );
+              },
             ),
           );
         },

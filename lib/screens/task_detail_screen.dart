@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nav_complexit_ystudy/models/task.dart';
 
 class TaskDetailScreen extends StatelessWidget {
-  final String taskTitle;
-  final String status;
+  final Task task;
 
   const TaskDetailScreen({
     super.key, 
-    this.taskTitle = 'Implement User Authentication',
-    this.status = 'In Progress',
+    required this.task,
   });
 
   @override
@@ -20,7 +19,7 @@ class TaskDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              taskTitle,
+              task.title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -31,7 +30,7 @@ class TaskDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                status,
+                task.status,
                 style: TextStyle(color: Colors.blue[800], fontWeight: FontWeight.bold),
               ),
             ),
