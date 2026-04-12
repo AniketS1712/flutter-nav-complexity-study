@@ -9,10 +9,12 @@ class AppRouterDelegate extends RouterDelegate<RouteConfiguration>
   final GlobalKey<NavigatorState> navigatorKey;
 
   bool _isLoggedIn = false;
+  int _selectedTab = 0;
 
   AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   bool get isLoggedIn => _isLoggedIn;
+  int get selectedTab => _selectedTab;
 
   void login() {
     _isLoggedIn = true;
@@ -21,6 +23,11 @@ class AppRouterDelegate extends RouterDelegate<RouteConfiguration>
 
   void logout() {
     _isLoggedIn = false;
+    notifyListeners();
+  }
+
+  void setTab(int index) {
+    _selectedTab = index;
     notifyListeners();
   }
 
@@ -37,7 +44,10 @@ class AppRouterDelegate extends RouterDelegate<RouteConfiguration>
         else
           MaterialPage(
             key: const ValueKey('DashboardScreen'),
-            child: DashboardScreen(),
+            child: DashboardScreen(
+              selectedIndex: _selectedTab,
+              onTabSelected: setTab,
+            ),
           ),
       ],
       onPopPage: (route, result) {

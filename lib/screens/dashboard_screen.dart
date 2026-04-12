@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nav_complexit_ystudy/models/project.dart';
+import 'package:nav_complexit_ystudy/screens/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
+  final int selectedIndex;
+  final ValueChanged<int> onTabSelected;
+
   final List<Project> projects = [
     Project(id: '1', name: 'Mobile App Refactor', progress: 0.65),
     Project(id: '2', name: 'Legacy System Sync', progress: 0.30),
@@ -9,10 +13,45 @@ class DashboardScreen extends StatelessWidget {
     Project(id: '4', name: 'Client Onboarding', progress: 0.10),
   ];
 
-  DashboardScreen({super.key});
+  DashboardScreen({
+    super.key,
+    required this.selectedIndex,
+    required this.onTabSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Navigator(
+        pages: [
+          if (selectedIndex == 0)
+            MaterialPage(
+              key: const ValueKey('ProjectsList'),
+              child: _buildProjectsList(),
+            ),
+          if (selectedIndex == 1)
+            const MaterialPage(
+              key: ValueKey('ProfileScreen'),
+              child: ProfileScreen(),
+            ),
+        ],
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) return false;
+          return true;
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: onTabSelected,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProjectsList() {
     return Scaffold(
       appBar: AppBar(title: const Text('My Projects')),
       body: ListView.builder(
