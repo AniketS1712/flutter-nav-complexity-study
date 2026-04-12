@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nav_complexit_ystudy/navigation/router_delegate.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -31,7 +32,10 @@ class LoginScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),
-              onPressed: () {}, // Empty callback as requested
+              onPressed: () {
+                final delegate = Router.of(context).routerDelegate as AppRouterDelegate;
+                delegate.login();
+              },
               child: const Text('Login'),
             ),
           ],
